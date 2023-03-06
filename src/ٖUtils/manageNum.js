@@ -1,5 +1,5 @@
 export function abbreviateNum(num) {
-    let newValue = num;
+    let newValue =  Number(num);
     const suffixes = ["", "k", "m", "b", "t"];
     let suffixNum = 0;
     while (newValue >= 1000) {

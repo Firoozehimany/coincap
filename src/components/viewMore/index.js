@@ -1,20 +1,11 @@
 import { useState ,useEffect } from "react";
-import api from "../../ٖUtils/api"
 
-export default function GetMoreInfo() {
+export default function moreInfo() {
+    const [changeOffset, setChangeOffset] = useState()
+    const [showButton, setShowButton] = useState(true)
 
-    const [offset, setOffset] = useState = ([])
-
-    useEffect (function(){
-        moreCurrency()
-    },[])
-
-    async function moreCurrency() {
-        const response = await api.get('assets', { params: { limit: 40, offset: 0 } })
-        setOffset(response.data.data)
-    }
+    setShowButton(true)
     return (
         <div>{moreInfo}</div>
     )
-
 }

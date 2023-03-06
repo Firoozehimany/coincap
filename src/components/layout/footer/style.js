@@ -18,7 +18,7 @@ const Style = styled.div `
                 font-size: 14px;
                 font-weight: 700;
                 color: #fff;
-                opacity: 60%;
+                opacity: 65%;
             }
 
             a:hover {
@@ -38,7 +38,7 @@ const Style = styled.div `
 
             .icon {
                 display: inline;
-                width: 24px;
+                width: 28px;
                 padding: 6px 2px;
             }
     

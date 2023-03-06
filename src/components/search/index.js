@@ -16,16 +16,16 @@ export default function ShowSearchInput() {
     // }, [])
 
     async function getApi(e) {
+        setLoading(true)
         const assets = await api.get('assets', { params: { limit: 5, search: e.target.value } })
         setAssetsValue(assets.data.data);
         const exchange = await api.get('exchanges', { params: { limit: 5, search: e.target.value } });
         setExchangesValue(exchange.data.data);
+        setLoading(false)
     }
 
     function handelOnChange(e) {
-        setLoading(true)
         getApi(e)
-        setLoading(false)
     }
 
     function renderAssets() {

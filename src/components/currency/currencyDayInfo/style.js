@@ -4,8 +4,6 @@ const Style = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 60%;
-        padding: 14px;
 
         .nameInfo {
             display: flex;
@@ -33,8 +31,7 @@ const Style = styled.div`
 
         .priceInfo {
             display: flex;
-            justify-content: space-between;
-            width: 60%;
+            gap: 30px;
 
             .col {
                 padding: 14px;

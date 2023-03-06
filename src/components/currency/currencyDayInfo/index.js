@@ -2,14 +2,14 @@ import { fullNum, twoDecimal } from "../../../ٖUtils/manageNum"
 import moment from "moment"
 import iconPicAddress from "../../../ٖUtils/iconPicAddress"
 import Style from "./style"
-export default function CurrencyDayInfo(item) {
-    const { symbol, name, date, lowDayPrice, highDayPrice, average, change } = item
+export default function CurrencyDayInfo({ data, date, lowDayPrice, highDayPrice, average, change }) {
+    const { symbol, name } = data
+    
     return (
         <Style>
             <div className="info">
                 <div className="nameInfo">
-                    <img src={iconPicAddress(symbol)} />
-                    {/* <IconPicAddress iconPic={symbol}/> */}
+                    <img src={iconPicAddress(symbol)}/>
                     <div className="other">
                         <h2 className="name">{name} ({symbol})</h2>
                         <p className="date">{moment(date).format("DD MMMM YYYY")}</p>

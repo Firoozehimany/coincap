@@ -25,7 +25,6 @@ export default function CurrencyRow() {
           <td className="icon">
             <Link to={`/assets/${id}`}>
               <img src={iconPicAddress(symbol)} />
-              {/* <IconPicAddress iconPic={symbol}/> */}
               <div>
                 <p className="name">{name}</p>
                 <p className="symbol">{symbol}</p>

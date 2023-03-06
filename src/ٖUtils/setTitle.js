@@ -1,3 +1,3 @@
-export default function setTitle(title) {
-    return document.title = `${title} | CoinCap.io`
+export default function setTitle(name="", symbol="") {
+    return document.title = `${name} (${symbol}) | CoinCap.io`
 }

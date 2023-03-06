@@ -1,45 +1,80 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import CurrencyDayInfo from "../currencyDayInfo";
+import Chart from "../currencyChart";
+import Swap from "../../swap"
+import { useEffect, useState, useRef } from "react"
+import { useParams } from "react-router-dom"
+import moment from "moment";
 import api from "../../../ٖUtils/api"
 import Style from "./style";
-import moment from "moment";
-import CurrencyDayInfo from "../currencyDayInfo";
 
-export default function CurrencyInfo() {
-    const [currencyData, setCurrencyData] = useState([])
+export default function CurrencyInfo({ data }) {
     const [currencyHistory, setCurrencyHistory] = useState([])
-    const [dayDate, setDayDate] = useState([])
+    const [changeInterval, setChangeInterval] = useState("m1")
+    const [date, setDate] = useState([])
     const { id } = useParams()
+    const buttonsRef = {
+        "1d": useRef(null), "1w": useRef(null), "1m": useRef(null), "3m": useRef(null), "6m": useRef(null), "1y": useRef(null), "all": useRef(null),
+    };
 
-    useEffect(() => { getDataApi() }, [])
-    async function getDataApi() {
-        const response = await api.get('assets', { params: { ids: `${id}` } })
-        setCurrencyData(response.data.data)
-    }
-
-    useEffect(() => { getHistoryApi() }, [])
+    useEffect(() => { getHistoryApi() }, [changeInterval])
     async function getHistoryApi() {
-        const response = await api.get(`assets/${id}/history`, { params: { interval: "m1" } })
+        const response = await api.get(`assets/${id}/history`, { params: { interval: `${changeInterval}` } })
         setCurrencyHistory(response.data.data)
-        setDayDate(response.data)
+        setDate(response.data.timestamp)
     }
 
-    const dayPrice = currencyHistory.map(item => item.priceUsd)
-    const lowDayPrice = Math.min(...dayPrice)
-    const highDayPrice = Math.max(...dayPrice)
+    let test = [];
+    for (let i = 0; i < currencyHistory.length; i += 5) {
+        const currentValue = currencyHistory[i];
+        test.push(currentValue);
+    }
+    const price = test.map(item => item.priceUsd)
+    const lowDayPrice = Math.min(...price)
+    const highDayPrice = Math.max(...price)
     const average = (lowDayPrice + highDayPrice) / 2
-    const lastPrice = dayPrice.slice(-1)
-    const change = ((lastPrice - average) * 100) / average
-    const date = dayDate.timestamp
+    const change = ((price.slice(-1)) - average) * 100 / average
 
-    const name = currencyData.map(item => item.name)
-    const symbol = currencyData.map(item => item.symbol)
-    // const name = ((currencyData[0].name))
-    // const symbol = (currencyData[0].symbol)
+    function manageTime(time) {
+        if (changeInterval === "m1" || changeInterval === "m15") {
+            return moment(time).format("hA")
+        } else if (changeInterval === "h1" || changeInterval === "h2" || changeInterval === "h6") {
+            return moment(time).format("MMM D")
+        } else if (changeInterval === "h12" || changeInterval === "d1") {
+            return moment(time).format("MMM YYYY")
+        }
+    }
+
+    const time = test.map(item => item.time)
+    const timeSheet = test.map(item => manageTime(item.time))
+
+    function changeChart(interval, buttonId) {
+        setChangeInterval(interval);
+        for (const key in buttonsRef) {
+            buttonsRef[key].current.classList.remove("click");
+        };
+        buttonsRef[buttonId].current.classList.add("click");
+    }
 
     return (
         <Style>
-            <CurrencyDayInfo name={name} symbol={symbol} date={date} lowDayPrice={lowDayPrice} highDayPrice={highDayPrice} average={average} change={change} />
+            <div className="container">
+                <div className="mainInfo">
+                    <div className="currencyInfo">
+                        <CurrencyDayInfo data={data} date={date} lowDayPrice={lowDayPrice} highDayPrice={highDayPrice} average={average} change={change} />
+                        <Chart price={price} time={time} change={change} timeSheet={timeSheet} />
+                        <div className="manageChart">
+                            <button className="click" ref={buttonsRef["1d"]} onClick={() => changeChart("m1", "1d")}>1D</button>
+                            <button ref={buttonsRef["1w"]} onClick={() => changeChart("m15", "1w")}>1W</button>
+                            <button ref={buttonsRef["1m"]} onClick={() => changeChart("h1", "1m")}>1M</button>
+                            <button ref={buttonsRef["3m"]} onClick={() => changeChart("h2", "3m")}>3M</button>
+                            <button ref={buttonsRef["6m"]} onClick={() => changeChart("h6", "6m")}>6M</button>
+                            <button ref={buttonsRef["1y"]} onClick={() => changeChart("h12", "1y")}>1Y</button>
+                            <button ref={buttonsRef["all"]} onClick={() => changeChart("d1", "all")}>ALL</button>
+                        </div>
+                    </div>
+                    <Swap />
+                </div>
+            </div>
         </Style>
     )
 }

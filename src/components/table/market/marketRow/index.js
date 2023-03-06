@@ -1,24 +1,10 @@
-import { useEffect, useState, } from "react"
-import api from "../../../../ٖUtils/api"
-import { Link, useParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { unDecimalfullNum, twoDecimal, fullNum } from "../../../../ٖUtils/manageNum"
 import Style from "./style"
-export default function MarketRow() {
-  const [market, setmarket] = useState([])
-  const {id} = useParams()
+export default function MarketRow({ market }) {
 
-
-  useEffect(function () {
-    getApi()
-  }, [])
-
-  async function getApi() {
-    const mResponse = await api.get(`assets/${id}/markets`, { params: { limit: 20 } })
-    setmarket(mResponse.data.data)
-  }
-
-  function renderMarketRow() {
-    return market.map(function (item, index) {
+  function renderRow() {
+    return market.map(function(item, index) {
       const { exchangeId, baseSymbol, quoteSymbol, priceUsd, volumeUsd24Hr, volumePercent, tradesCount24Hr } = item
       return (
         <tr key={index}>
@@ -38,11 +24,8 @@ export default function MarketRow() {
       )
     })
   }
-
   return (
     <Style>
-      {renderMarketRow()}
-    </Style>
-  )
+      {renderRow()}
+    </Style>)
 }
-

@@ -19,6 +19,7 @@ const style = styled.div `
 
         &:hover {
             top: -5px;
+            Cursor:pointer
         }
     }
 }

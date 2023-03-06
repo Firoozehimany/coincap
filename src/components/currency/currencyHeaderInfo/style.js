@@ -70,6 +70,7 @@ const Style = styled.div`
                         font-weight: 900;
                         font-size: 28px;
                         margin: 0 0 16px;
+                        min-width: 500px;
                     }
                 }
 

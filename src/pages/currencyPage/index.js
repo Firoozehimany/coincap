@@ -1,27 +1,35 @@
-import Style from "./style"
 import CurrencyHeaderInfo from "../../components/currency/currencyHeaderInfo";
-import CurrencyDayInfo from "../../components/currency/currencyDayInfo";
 import MarketTable from "../../components/table/market/marketTable";
 import Button from "../../components/button";
 import MainLayout from "../../components/layout/mainLayout";
-import { useEffect } from "react";
 import setTitle from "../../ٖUtils/setTitle";
-import Chart from "../../components/currency/currencyChart";
+import api from "../../ٖUtils/api"
 import CurrencyInfo from "../../components/currency/currencyInfo";
-export default function CurrencyPage(){
-    useEffect(function(){
-        setTitle()
-    },[])
-    return(
-       <MainLayout>
-            <CurrencyHeaderInfo/>
-            <CurrencyInfo/>
-            {/* <CurrencyDayInfo/> */}
-            <Chart/>
-            <MarketTable/>
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Style from "./style"
+
+export default function CurrencyPage() {
+    const [currencyData, setCurrencyData] = useState({})
+    const { id } = useParams()
+
+    useEffect(() => { getDataApi() }, [currencyData])
+    async function getDataApi() {
+        const response = await api.get(`assets/${id}`)
+        setCurrencyData(response.data.data)
+    }
+
+    useEffect(function () {
+        setTitle(currencyData.name, currencyData.symbol)
+    }, [currencyData])
+
+    return (
+        <MainLayout>
+            <CurrencyHeaderInfo data={currencyData} />
+            <CurrencyInfo data={currencyData} />
+            <MarketTable />
             <Style>
-                <div className="buttom"><Button text="View More" /></div>
             </Style>
-       </MainLayout>
+        </MainLayout>
     )
 }
