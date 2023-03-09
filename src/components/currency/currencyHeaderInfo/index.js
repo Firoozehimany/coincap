@@ -1,5 +1,6 @@
 import Button from "../../button";
 import { Link } from "react-router-dom";
+import { FaCaretUp, FaCaretDown } from "react-icons/fa"
 import { fullNum, twoDecimal, abbreviateNum } from "../../../ٖUtils/manageNum";
 import Style from "./style";
 
@@ -24,6 +25,7 @@ export default function CurrencyHeaderInfo({data}) {
                             <div className="changePercent">
                                 <h2>{fullNum(priceUsd)}</h2>
                                 <span style={{ color: changePercent24Hr < 0 ? "#EF9A9A" : "#18C683" }}>{twoDecimal(changePercent24Hr) + "%"}</span>
+                                {changePercent24Hr < 0 ? <FaCaretDown size={18} color={"#EF9A9A"}/> :<FaCaretUp size={18} color={"#18C683"}/> }
                             </div>
                         </div>
                     </div>
@@ -40,9 +42,7 @@ export default function CurrencyHeaderInfo({data}) {
                                 <p>Volume (24Hr)</p>
                                 <h3>{"$" + abbreviateNum(volumeUsd24Hr)}</h3>
                             </div>
-                            {/* <Link to={""}> */}
                             <Button text="Explorer" link={explorer}></Button>
-                            {/* </Link> */}
                         </div>
                         <div className="col">
                             <div className="info">

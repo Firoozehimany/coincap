@@ -1,10 +1,20 @@
-import { useEffect } from "react";
-import Button from "../../components/button";
+import { useEffect, useState } from "react";
 import InfoSegment from "../../components/infoSegment";
 import MainLayout from "../../components/layout/mainLayout";
 import CurrencyTable from "../../components/table/coins/currencyTable";
-import Style from "./style"
+import api from "../../ٖUtils/api"
+
 export default function Home() {
+    const [currency, setCurrency] = useState([])
+    const [offset, setOffset] = useState(0);
+    const [limit, setLimit] = useState(20);
+
+    useEffect(() => { getApi()}, [currency, offset, limit] )
+    async function getApi() {
+      const response = await api.get('assets')
+      setCurrency(response.data.data)
+    }
+
     useEffect(function () {
         document.title = "CoinCap | Reliable";
     }, [])
@@ -12,10 +22,7 @@ export default function Home() {
     return (
         <MainLayout>
             <InfoSegment/>
-            <CurrencyTable/>
-            <Style>
-                <div className="buttom"><Button text="View More" /></div>
-            </Style>
+            <CurrencyTable data={currency} setData={setCurrency} offset={offset} setOffset={setOffset} limit={limit} setLimit={setLimit}/>
         </MainLayout>
     )
 }

@@ -1,7 +1,20 @@
-import Style from "./style"
 import CurrencyRow from "../currencyRow"
-import { Link } from "react-router-dom"
-export default function CurrencyTable() {
+import ViewMore from "../../../viewMore"
+import { FaCaretUp, FaCaretDown } from "react-icons/fa"
+import { useEffect, useState, useRef } from "react"
+import { sortWords, sortNumbers } from "../../../../ٖUtils/manageSorting"
+import { showArrowIcon } from "../../../../ٖUtils/manageArrows"
+import { Link, useParams } from "react-router-dom"
+import Style from "./style"
+
+export default function CurrencyTable({data, setData, offset, setOffset, limit, setLimit}) {
+
+    const [sortData, setSortData] = useState([])
+    const [isSorting, setIsSorting] = useState(true);
+    const [showIcon, setShowIcon] = useState(false)
+
+    const firstShow = data.slice(0,limit)
+
     return(
         <Style>
             <div className="container">
@@ -18,8 +31,9 @@ export default function CurrencyTable() {
                             <th className="right">Change(24Hr)</th>
                         </tr>
                     </thead>
-                    <CurrencyRow/>
+                    <CurrencyRow data={firstShow}/>
                 </table>
+                <ViewMore address={'assets'} data={data} setData={setData} limit={limit} setLimit={setLimit} offset={offset} setOffset={setOffset}/>
             </div>
         </Style>
     )

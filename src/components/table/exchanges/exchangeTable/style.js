@@ -8,36 +8,88 @@ const Style = styled.div `
             height: 44px;
             background: #fafafa;
 
-            th {
-                font-size: 13px;
-                font-weight: 400;
-                opacity: 60%;
-                padding: 0 10px;
-                text-align: center;
+            tr {
 
-                &:hover {
-                    opacity: 100%
+                th {
+                    font-size: 13px;
+                    font-weight: 400;
+                    opacity: 60%;
+                    padding: 10px;
+                    text-align: center;
+                    cursor: pointer;
+    
+                    &:hover {
+                        opacity: 100%;
+                    }
                 }
-            }
-
-            .rank {
-                img {
-                    width: 20px;
+    
+                .none {
+                    opacity: 60%;
+                    cursor: default;
+    
+                    &:hover {
+                        opacity: 60%;
+                    }
                 }
-            }
+    
+                i {
+                    display:none;
+                }
+    
+    
+                .right {
+                    text-align: right;
+                }
+    
+                .center {
+                    text-align: center;
+                }
+    
+                .showArrowUp {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    opacity: 100% ;
+                    padding-top 14px;
+    
+                    .up {
+                        display: inline-block;
+                        width: 13px;
+                        height: 13px;
+                        padding-left: 6px;
+                    }
+                }
+    
+                .showArrowDown {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    opacity: 100% ;
+                    padding-top: 14px;
+    
+                    .down {
+                        display: inline-block;
+                        width: 13px;
+                        height:13px;
+                        padding-left: 6px;
+                    }
+                }
 
-            .left {
-                text-align: left;
-            }
-
-            .right {
-                text-align: right;
-            }
-
-            .center {
-                text-align: center;
+                .left {
+                    text-align: left;
+                }
+    
             }
         }
     }
+
+    .buttom {
+        margin: 30px 0 20px;
+        text-align: center;
+        }
+
+    .empty {
+        margin-top: 44px
+        }
 `;
 export default Style;

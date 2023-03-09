@@ -4,20 +4,10 @@ import { Link, useParams } from "react-router-dom"
 import { abbreviateNum, fullNum, twoDecimal } from "../../../../ٖUtils/manageNum"
 import iconPicAddress from "../../../../ٖUtils/iconPicAddress"
 import Style from "./style"
-export default function CurrencyRow() {
-  const [currency, setCurrency] = useState([])
-
-  useEffect(function () {
-    getApi()
-  }, [currency])
-
-  async function getApi() {
-    const response = await api.get('assets', { params: { limit: 20 } })
-    setCurrency(response.data.data)
-  }
+export default function CurrencyRow({data}) {
 
   function renderCurrency() {
-    return currency.map(function (item) {
+    return data.map(function (item) {
       const { id, rank, name, symbol, priceUsd, marketCapUsd, vwap24Hr, supply, volumeUsd24Hr, changePercent24Hr, } = item
       return (
         <tr key={id}>
@@ -31,12 +21,12 @@ export default function CurrencyRow() {
               </div>
             </Link>
           </td>
-          <td className="right">{currency.length >= 0 ? "$" + fullNum(priceUsd) : " - "}</td>
+          <td className="right">{data.length >= 0 ? "$" + fullNum(priceUsd) : " - "}</td>
           <td className="right">{"$" + abbreviateNum(marketCapUsd)}</td>
           <td className="right">{"$" + fullNum(vwap24Hr)}</td>
           <td className="right">{abbreviateNum(supply)}</td>
           <td className="right">{"$" + abbreviateNum(volumeUsd24Hr)}</td>
-          <td className="right" style={{ color: changePercent24Hr < 0 ? "#F44336" : "#18C683" }}>{currency.length >= 0 ? twoDecimal(changePercent24Hr) + "%" : " - "}</td>
+          <td className="right" style={{ color: changePercent24Hr < 0 ? "#F44336" : "#18C683" }}>{data.length >= 0 ? twoDecimal(changePercent24Hr) + "%" : " - "}</td>
         </tr>
       )
     })

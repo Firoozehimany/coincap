@@ -3,7 +3,7 @@ import { unDecimalfullNum, twoDecimal, fullNum } from "../../../../ٖUtils/manag
 import Style from "./style"
 export default function MarketRow({ market }) {
 
-  function renderRow() {
+  function rendeMarketrRow() {
     return market.map(function(item, index) {
       const { exchangeId, baseSymbol, quoteSymbol, priceUsd, volumeUsd24Hr, volumePercent, tradesCount24Hr } = item
       return (
@@ -26,6 +26,6 @@ export default function MarketRow({ market }) {
   }
   return (
     <Style>
-      {renderRow()}
+      {rendeMarketrRow()}
     </Style>)
 }
