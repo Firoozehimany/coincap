@@ -1,7 +1,10 @@
 import Style from "./style";
 import Button from "../../button"
-import ShowSearchInput from "../../search";
+import Search from "../../search";
 import { Link } from "react-router-dom";
+import Settings from "../../settings"
+import { useState } from "react"
+
 export default function Header() {
     return (
         <Style>
@@ -17,8 +20,8 @@ export default function Header() {
                             <Link to={"/"}><img src="/assets/images/logo.svg"/></Link>
                         </div>
                         <div className="info">
-                            <ShowSearchInput/>
-                            <img className="setting" src="/assets/images/setting.svg"/>
+                            <Search/>
+                            <Settings/>
                             <Button text="Connect Wallet"/>
                         </div>
                     </div>

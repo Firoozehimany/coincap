@@ -9,7 +9,7 @@ export default function Home() {
     const [offset, setOffset] = useState(0);
     const [limit, setLimit] = useState(20);
 
-    useEffect(() => { getApi()}, [currency, offset, limit] )
+    useEffect(() => { getApi()}, [ offset, limit ] )
     async function getApi() {
       const response = await api.get('assets')
       setCurrency(response.data.data)

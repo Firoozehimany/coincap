@@ -1,72 +1,70 @@
-import { useState, useRef, useEffect } from "react";
-import api from "../../ٖUtils/api"
 import ClipLoader from "react-spinners/ClipLoader"
+import { FaSearch } from "react-icons/fa";
+import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom"
+import api from "../../ٖUtils/api"
 import Style from "./style";
 
-export default function ShowSearchInput() {
+
+export default function Search() {
+
     const [assetsValue, setAssetsValue] = useState([])
-    const [exchangesValue, setExchangesValue] = useState([])
     const [loading, setLoading] = useState(false)
+    const [showInput, setShowInput] = useState(false)
     const [result, setResult] = useState(false)
-    const ref = useRef(null)
+    const inputRef = useRef(null);
 
+    useEffect(() => {
+        if (showInput && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [showInput]);
 
-    // useEffect(function () {
-    //     getApi()
-    // }, [])
-
-    async function getApi(e) {
+    async function handelOnChange(e) {
         setLoading(true)
         const assets = await api.get('assets', { params: { limit: 5, search: e.target.value } })
         setAssetsValue(assets.data.data);
-        const exchange = await api.get('exchanges', { params: { limit: 5, search: e.target.value } });
-        setExchangesValue(exchange.data.data);
         setLoading(false)
+        setResult(true)
     }
 
-    function handelOnChange(e) {
-        getApi(e)
+    function handelSearchIcon() {
+        setShowInput(!showInput);
     }
 
-    function renderAssets() {
-        return assetsValue.map(function (item, id) {
-            const { symbol, name } = item
+    function handelLink(id) {
+        window.location.href = `/assets/${id}`;
+    }
+
+    function renderSearch() {
+        return assetsValue.map(function (item) {
+            const { symbol, name, id } = item
             return (
-                <a href="" key={id}>{name} ({symbol})</a>
-            )
-        })
-    }
-
-    function renderExchanges() {
-        return exchangesValue.map(function (item, id) {
-            const { name } = item
-            return (
-                <a href="" key={id}>{name}</a>
+                <Link key={id} to="#" onClick={() => handelLink(id)}>
+                    <span>{name} ({symbol})</span>
+                </Link>
             )
         })
     }
 
     return (
         <Style>
-            {loading === true ? <div className="loading">< ClipLoader size="20px" /></div> :
-                <img className="searchIcon" src="/assets/images/search.svg" onClick={() => ref.current.focus()} />
+             {loading === true ? <div className="loading">< ClipLoader size="20px" /></div> :
+                <i className="searchIcon"><FaSearch size={14} onClick={handelSearchIcon} /></i>
             }
-
-            <input ref={ref} name="search" type="text"
-                onChange={handelOnChange} onBlur={() => setResult(true)} onFocus={() => setResult(false)} ></input>
-                
-            {result === false ?
+            {showInput && (
+                <input ref={inputRef} name="search" type="text" onChange={handelOnChange}/>
+            )}
+            {inputRef.current && inputRef.current.value !== "" ?
                 <div className="dropDown">
-                    {assetsValue.length || exchangesValue.length > 0
-                        ? <div className="show">
-                            {assetsValue.length <= 0 ? <div>{ }</div>
-                                : <div className="result"><h3>Assets</h3><div>{renderAssets()}</div></div>}
-                            {exchangesValue.length <= 0 ? <div>{ }</div>
-                                : <div className="result"><h3>Exchenge</h3><div>{renderExchanges()}</div></div>}
+                    {result === true && (
+                        <div className="show">
+                            <h3>Assets</h3>
+                            <div>{renderSearch()}</div>
                         </div>
-                        : null}
+                    )}
                 </div>
-                : result === true}
+                : null}
         </Style>
     )
 }

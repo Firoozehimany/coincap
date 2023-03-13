@@ -14,7 +14,6 @@ export function showArrowIcon(showIcon, tHeadRef, refId){
             tHeadRef[key].current.classList.remove("showArrowUp", "showArrowDown")
         }
     }
-    
     if (showIcon === false){
         showArrowUp(tHeadRef, refId)
     } else {

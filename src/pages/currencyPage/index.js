@@ -9,7 +9,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 export default function CurrencyPage() {
-    const [currencyData, setCurrencyData] = useState({});
+    const [currencyData, setCurrencyData] = useState([]);
+    const [currencyHistory, setCurrencyHistory] = useState([])
+    const [changeInterval, setChangeInterval] = useState("m1")
+    const [market, setMarket] = useState([])
+    const [offset, setOffset] = useState(1);
+    const [limit, setLimit] = useState(20);
+    const [date, setDate] = useState([])
     const { id } = useParams();
 
     useEffect(() => { getDataApi() }, []);
@@ -22,11 +28,24 @@ export default function CurrencyPage() {
         setTitle(currencyData.name, currencyData.symbol);
     }, [currencyData]);
 
+    useEffect(() => { getHistoryApi() }, [changeInterval])
+    async function getHistoryApi() {
+        const response = await api.get(`assets/${id}/history`, { params: { interval: `${changeInterval}` } })
+        setCurrencyHistory(response.data.data)
+        setDate(response.data.timestamp)
+    }
+
+    useEffect(() => { getApi() }, [offset, limit])
+    async function getApi() {
+        const response = await api.get(`assets/${id}/markets`)
+        setMarket(response.data.data)
+    };
+
     return (
         <MainLayout>
             <CurrencyHeaderInfo data={currencyData} />
-            <CurrencyInfo data={currencyData} />
-            <MarketTable />
+            <CurrencyInfo data={currencyData} date={date} currencyHistory={currencyHistory} setCurrencyHistory={setCurrencyHistory} changeInterval={changeInterval} setChangeInterval={setChangeInterval} />
+            <MarketTable marketData={market} setMarketData={setMarket} limit={limit} setLimit={setLimit} offset={offset} setOffset={setOffset}/>
         </MainLayout>
     )
 }

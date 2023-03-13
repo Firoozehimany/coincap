@@ -1,12 +1,11 @@
-import { useEffect, useState, } from "react"
-import api from "../../../../ٖUtils/api"
-import { Link, useParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { abbreviateNum, fullNum, twoDecimal } from "../../../../ٖUtils/manageNum"
 import iconPicAddress from "../../../../ٖUtils/iconPicAddress"
 import Style from "./style"
+
 export default function CurrencyRow({data}) {
 
-  function renderCurrency() {
+  function renderCurrencyRow() {
     return data.map(function (item) {
       const { id, rank, name, symbol, priceUsd, marketCapUsd, vwap24Hr, supply, volumeUsd24Hr, changePercent24Hr, } = item
       return (
@@ -34,7 +33,7 @@ export default function CurrencyRow({data}) {
 
   return (
     <Style>
-      {renderCurrency()}
+      {renderCurrencyRow()}
     </Style>
   )
 }

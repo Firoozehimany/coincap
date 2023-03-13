@@ -1,5 +1,4 @@
 import MarketRow from "../marketRow"
-import Button from "../../../button"
 import ViewMore from "../../../viewMore"
 import { FaCaretUp, FaCaretDown } from "react-icons/fa"
 import { useEffect, useState, useRef } from "react"
@@ -9,48 +8,31 @@ import { showArrowIcon } from "../../../../ٖUtils/manageArrows"
 import api from "../../../../ٖUtils/api"
 import Style from "./style"
 
-export default function MarketTable() {
-    const [market, setMarket] = useState([])
-    const [offset, setOffset] = useState(1);
-    const [limit, setLimit] = useState(20);
-    const [addMore, setAddMore] = useState([])
+export default function MarketTable({marketData, setMarketData, limit, setLimit, offset, setOffset}) {
+
     const [isSorting, setIsSorting] = useState(true);
     const [showIcon, setShowIcon] = useState(false)
     const { id } = useParams()
+    
     const tHeadRef = {
         "exchange": useRef(null), "price": useRef(null), "volume24": useRef(null), "volumeP": useRef(null),
     };
 
-    useEffect(() => { getApi() }, [offset, limit])
-    async function getApi() {
-        const response = await api.get(`assets/${id}/markets`)
-        setMarket(response.data.data)
-    };
-
-    const firstShowMarket = market.slice(0, limit)
-
-    async function viewMore() {
-        setOffset(offset + 20)
-        setLimit(limit + 20)
-        const response = await api.get(`assets/${id}/markets`, { params: { limit: limit+20, offset: offset } })
-        setAddMore(response.data.data)
-        setMarket(current => [...current, ...addMore])
-    };
+    const firstShowMarket = marketData.slice(0, limit)
 
     function sortNameClick(refId, sortValue) {
         setIsSorting(!isSorting)
-        sortWords(isSorting, market, setMarket, sortValue)
+        sortWords(isSorting, marketData, setMarketData, sortValue)
         setShowIcon(!showIcon)
         showArrowIcon(showIcon, tHeadRef, refId)
     };
     
     function sortNumberClick(refId, sortValue) {
         setIsSorting(!isSorting)
-        sortNumbers(isSorting, market, setMarket, sortValue)
+        sortNumbers(isSorting, marketData, setMarketData, sortValue)
         setShowIcon(!showIcon)
         showArrowIcon(showIcon, tHeadRef, refId)
     };
-    
     
     return (
         <Style>
@@ -86,9 +68,7 @@ export default function MarketTable() {
                     </thead>
                     <MarketRow market={firstShowMarket} />
                 </table>
-                <ViewMore address={`assets/${id}/markets`} data={market} setData={setMarket} limit={limit} setLimit={setLimit} offset={offset} setOffset={setOffset}/>
-                {/* <div className="buttom"><Button text="View More" click={viewMore} /></div> */}
-                {/* {addMore.length > 0 && addMore.length === limit ? <div className="buttom"><Button text="View More" click={viewMore} /></div> : <div className="empty"></div>} */}
+                <ViewMore address={`assets/${id}/markets`} data={marketData} setData={setMarketData} limit={limit} setLimit={setLimit} offset={offset} setOffset={setOffset}/>
             </div>
         </Style>
     )

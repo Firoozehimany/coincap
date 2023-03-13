@@ -3,6 +3,7 @@ const Style = styled.div `
     .buttom {
         margin: 30px 0 20px;
         text-align: center;
+        Cursor:pointer
         }
 
     .empty {

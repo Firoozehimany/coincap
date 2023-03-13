@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { abbreviateNum, twoDecimal } from "../../../../ٖUtils/manageNum"
 import Style from "./style"
+
 export default function ExchangeRow({exchange}) {
   
   function renderExchangeRow() {

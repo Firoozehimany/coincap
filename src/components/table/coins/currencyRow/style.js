@@ -48,12 +48,7 @@ const Style = styled.tbody `
                 margin-top: 2px;
             }
         }
-
     }
 }
-
-
-}
-
 `;
 export default Style

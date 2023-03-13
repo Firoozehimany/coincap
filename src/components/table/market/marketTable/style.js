@@ -37,7 +37,6 @@ const Style = styled.div `
                     display:none;
                 }
     
-    
                 .right {
                     text-align: right;
                 }
@@ -78,10 +77,8 @@ const Style = styled.div `
 
                 .left {
                     text-align: left;
-                    display: flex;
                     justify-content: flex-start;
                 }
-
             }
         }
     }

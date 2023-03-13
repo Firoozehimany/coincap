@@ -44,12 +44,6 @@ const Style = styled.div `
                 align-items: center;
                 padding: 0 16px;
                 position: relative;
-
-                .setting {
-                    width: 34px;
-                    height: 100%;
-                    padding: 8px;
-                }
             }
         }
     }

@@ -8,7 +8,6 @@ export function sortWords(isSorting, list, setList, sortValue) {
     }
 };
 
-
 export function sortNumbers(isSorting, list, setList, sortValue) {
     if (isSorting === true) {
         const sortList = [...list].sort((a, b) => a[sortValue] - b[sortValue]);

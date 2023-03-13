@@ -24,7 +24,7 @@ const Style = styled.div`
                 padding: 16px;
 
                 .shape {
-                    width: 56px;
+                    min-width: 56px;
                     height: 94px;
                     background: #18C683;
                     text-align: center;
@@ -34,7 +34,7 @@ const Style = styled.div`
                     box-shadow: rgb(0 0 0 / 40%) 0px 2px 15px ;
     
                     &:before {
-                        width: 76px;
+                        width: calc(100% + 20px);
                         height: 10px;
                         content: "";
                         background: #18C683;

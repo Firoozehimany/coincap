@@ -77,8 +77,13 @@ const Style = styled.div `
 
                 .left {
                     text-align: left;
+                    justify-content: flex-start;
                 }
     
+                .center {
+                    text-align: center;
+                    justify-content: center;
+                }
             }
         }
     }

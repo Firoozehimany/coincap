@@ -7,28 +7,19 @@ import moment from "moment";
 import api from "../../../ٖUtils/api"
 import Style from "./style";
 
-export default function CurrencyInfo({ data }) {
-    const [currencyHistory, setCurrencyHistory] = useState([])
-    const [changeInterval, setChangeInterval] = useState("m1")
-    const [date, setDate] = useState([])
-    const { id } = useParams()
+export default function CurrencyInfo({ data, date, currencyHistory, changeInterval, setChangeInterval }) {
+
     const buttonsRef = {
         "1d": useRef(null), "1w": useRef(null), "1m": useRef(null), "3m": useRef(null), "6m": useRef(null), "1y": useRef(null), "all": useRef(null),
     };
 
-    useEffect(() => { getHistoryApi() }, [changeInterval])
-    async function getHistoryApi() {
-        const response = await api.get(`assets/${id}/history`, { params: { interval: `${changeInterval}` } })
-        setCurrencyHistory(response.data.data)
-        setDate(response.data.timestamp)
-    }
-
-    let test = [];
+    let briefing = [];
     for (let i = 0; i < currencyHistory.length; i += 5) {
         const currentValue = currencyHistory[i];
-        test.push(currentValue);
+        briefing.push(currentValue);
     }
-    const price = test.map(item => item.priceUsd)
+    
+    const price = briefing.map(item => item.priceUsd)
     const lowDayPrice = Math.min(...price)
     const highDayPrice = Math.max(...price)
     const average = (lowDayPrice + highDayPrice) / 2
@@ -44,8 +35,8 @@ export default function CurrencyInfo({ data }) {
         }
     }
 
-    const time = test.map(item => item.time)
-    const timeSheet = test.map(item => manageTime(item.time))
+    const time = briefing.map(item => item.time)
+    const timeSheet = briefing.map(item => manageTime(item.time))
 
     function changeChart(interval, buttonId) {
         setChangeInterval(interval);

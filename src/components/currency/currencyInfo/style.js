@@ -31,7 +31,6 @@ const Style = styled.div`
                         border: 1px solid #18C683;
                         background: #18C683;
                         color: #fff;
-
                     }
                 }
 
