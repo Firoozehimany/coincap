@@ -28,10 +28,12 @@ const Style = styled.div`
         }
 
         .searchIcon {
+            width: 14px;
+            height: 14px;
             position: absolute;
             top: 0;
             right: 0;
-            padding: 6px 12px;
+            padding: 6px 24px;
             z-index: 200;
             cursor: text;
         }

@@ -1,42 +1,31 @@
-import ClipLoader from "react-spinners/ClipLoader"
-import { FaSearch } from "react-icons/fa";
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom"
 import api from "../../ٖUtils/api"
+import ClipLoader from "react-spinners/ClipLoader"
+import { Link } from "react-router-dom"
+import { FaSearch } from "react-icons/fa";
 import Style from "./style";
 
-
-export default function Search() {
-
+export default function ShowSearchInput() {
     const [assetsValue, setAssetsValue] = useState([])
+    const [exchangesValue, setExchangesValue] = useState([])
     const [loading, setLoading] = useState(false)
-    const [showInput, setShowInput] = useState(false)
     const [result, setResult] = useState(false)
-    const inputRef = useRef(null);
-
-    useEffect(() => {
-        if (showInput && inputRef.current) {
-            inputRef.current.focus();
-        }
-    }, [showInput]);
+    const inputRef = useRef(null)
 
     async function handelOnChange(e) {
         setLoading(true)
         const assets = await api.get('assets', { params: { limit: 5, search: e.target.value } })
         setAssetsValue(assets.data.data);
+        const exchange = await api.get('exchanges');
+        setExchangesValue(exchange.data.data);
         setLoading(false)
-        setResult(true)
-    }
-
-    function handelSearchIcon() {
-        setShowInput(!showInput);
     }
 
     function handelLink(id) {
         window.location.href = `/assets/${id}`;
     }
 
-    function renderSearch() {
+    function renderAssets() {
         return assetsValue.map(function (item) {
             const { symbol, name, id } = item
             return (
@@ -47,25 +36,57 @@ export default function Search() {
         })
     }
 
+    function renderExchanges() {
+        const filteredExchanges = exchangesValue.filter(item => item.name.includes(inputRef.current.value));
+        return filteredExchanges.slice(0,5).map(item => {
+            const { name, exchangeId } = item
+            return (
+                <Link key={exchangeId} to={`/exchange/${exchangeId}`}>
+                    <span>{name}</span>
+                </Link>
+            )
+        })
+      }
+
+
+    function handleBlur(e) {
+        const current = e.currentTarget;
+        setTimeout(() => {
+            if (!current.contains(document.activeElement)) {
+                setResult(false);
+            }
+        }, 0);
+    }
+
     return (
         <Style>
-             {loading === true ? <div className="loading">< ClipLoader size="20px" /></div> :
-                <i className="searchIcon"><FaSearch size={14} onClick={handelSearchIcon} /></i>
+            {loading === true ? <div className="loading">< ClipLoader size="20px" /></div> :
+                <i className="searchIcon" onClick={() => inputRef.current.focus()}><FaSearch size={14} /></i>
             }
-            {showInput && (
-                <input ref={inputRef} name="search" type="text" onChange={handelOnChange}/>
-            )}
+            <input ref={inputRef} name="search" type="text"
+                onChange={handelOnChange} onFocus={() => setResult(true)} onBlur={handleBlur} ></input>
             {inputRef.current && inputRef.current.value !== "" ?
-                <div className="dropDown">
-                    {result === true && (
-                        <div className="show">
-                            <h3>Assets</h3>
-                            <div>{renderSearch()}</div>
+                <div>
+                    {result === true ?
+                        <div className="dropDown">
+                            {assetsValue.length || exchangesValue.length > 0
+                                ? <div className="show">
+                                    {assetsValue.length >= 0 &&
+                                        <div className="result">
+                                            <h3>Assets</h3>
+                                            <div>{renderAssets()}</div>
+                                        </div>}
+                                    {exchangesValue.length >= 0 &&
+                                        <div className="result">
+                                            <h3>Exchenge</h3>
+                                            <div>{renderExchanges()}</div>
+                                        </div>}
+                                </div>
+                                : null}
                         </div>
-                    )}
+                        : result === false}
                 </div>
                 : null}
         </Style>
     )
 }
-
