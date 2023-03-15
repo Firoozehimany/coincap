@@ -1,4 +1,5 @@
 import { FaChevronDown } from "react-icons/fa";
+import { RiSettings3Fill } from "react-icons/ri";
 import Style from "./style"
 export default function Swap() {
     return (
@@ -6,7 +7,7 @@ export default function Swap() {
             <div className="wrapper">
                 <div className="title">
                     <h3>Swap</h3>
-                    <img className="setting" src="/assets/images/setting.svg" />
+                    <i className="setting"><RiSettings3Fill size={24}/></i>
                 </div>
                 <div className="inputBox">
                     <label>You Sell</label>

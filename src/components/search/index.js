@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import api from "../../ٖUtils/api"
 import ClipLoader from "react-spinners/ClipLoader"
 import { Link } from "react-router-dom"
@@ -7,17 +7,14 @@ import Style from "./style";
 
 export default function ShowSearchInput() {
     const [assetsValue, setAssetsValue] = useState([])
-    const [exchangesValue, setExchangesValue] = useState([])
     const [loading, setLoading] = useState(false)
     const [result, setResult] = useState(false)
     const inputRef = useRef(null)
 
     async function handelOnChange(e) {
         setLoading(true)
-        const assets = await api.get('assets', { params: { limit: 5, search: e.target.value } })
-        setAssetsValue(assets.data.data);
-        const exchange = await api.get('exchanges');
-        setExchangesValue(exchange.data.data);
+        const response = await api.get('assets', { params: { limit: 5, search: e.target.value } })
+        setAssetsValue(response.data.data);
         setLoading(false)
     }
 
@@ -35,19 +32,6 @@ export default function ShowSearchInput() {
             )
         })
     }
-
-    function renderExchanges() {
-        const filteredExchanges = exchangesValue.filter(item => item.name.includes(inputRef.current.value));
-        return filteredExchanges.slice(0,5).map(item => {
-            const { name, exchangeId } = item
-            return (
-                <Link key={exchangeId} to={`/exchange/${exchangeId}`}>
-                    <span>{name}</span>
-                </Link>
-            )
-        })
-      }
-
 
     function handleBlur(e) {
         const current = e.currentTarget;
@@ -69,17 +53,12 @@ export default function ShowSearchInput() {
                 <div>
                     {result === true ?
                         <div className="dropDown">
-                            {assetsValue.length || exchangesValue.length > 0
-                                ? <div className="show">
+                            {assetsValue.length > 0 ?
+                                <div className="show">
                                     {assetsValue.length >= 0 &&
                                         <div className="result">
                                             <h3>Assets</h3>
                                             <div>{renderAssets()}</div>
-                                        </div>}
-                                    {exchangesValue.length >= 0 &&
-                                        <div className="result">
-                                            <h3>Exchenge</h3>
-                                            <div>{renderExchanges()}</div>
                                         </div>}
                                 </div>
                                 : null}

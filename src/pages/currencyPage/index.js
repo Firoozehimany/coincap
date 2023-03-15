@@ -1,7 +1,6 @@
 import CurrencyInfo from "../../components/currency/currencyInfo";
 import CurrencyHeaderInfo from "../../components/currency/currencyHeaderInfo";
 import MarketTable from "../../components/table/market/marketTable";
-import Button from "../../components/button";
 import MainLayout from "../../components/layout/mainLayout";
 import { setTitle } from "../../ٖUtils/setTitle";
 import api from "../../ٖUtils/api";

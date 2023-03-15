@@ -1,5 +1,4 @@
 import Button from "../../button";
-import { Link } from "react-router-dom";
 import { FaCaretUp, FaCaretDown } from "react-icons/fa"
 import { fullNum, twoDecimal, abbreviateNum } from "../../../ٖUtils/manageNum";
 import Style from "./style";

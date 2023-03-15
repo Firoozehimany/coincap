@@ -22,13 +22,13 @@ export default function Footer() {
                         </div>
                         <div className="col">
                             <h3 className="title">FOLLOW US</h3>
-                            <a href="#"><img className="icon" src="/assets/images/twitter.svg"/></a>
-                            <a href="#"><img className="icon" src="/assets/images/facebook.svg"/></a>
+                            <a href="#"><img className="icon" src="/assets/images/twitter.svg" /></a>
+                            <a href="#"><img className="icon" src="/assets/images/facebook.svg" /></a>
                         </div>
                         <div className="col">
                             <h3 className="title">COINCAP APP AVAILABLE ON</h3>
-                            <a href="#"><img className="store" src="/assets/images/google_play.svg"/></a>
-                            <a href="#"><img className="store" src="/assets/images/apple_store.svg"/></a>
+                            <a href="#"><img className="store" src="/assets/images/google_play.svg" /></a>
+                            <a href="#"><img className="store" src="/assets/images/apple_store.svg" /></a>
                         </div>
                     </div>
                 </div>

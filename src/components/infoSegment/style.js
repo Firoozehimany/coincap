@@ -1,5 +1,5 @@
 import styled from "styled-components"
-const Style = styled.div `
+const Style = styled.div`
 & {
     width: 100%;
     height: auto;
@@ -40,7 +40,6 @@ const Style = styled.div `
             font-weight: 700;
         }
     }
-}
 }
 `;
 export default Style;

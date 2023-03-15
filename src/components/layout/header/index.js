@@ -3,7 +3,6 @@ import Button from "../../button"
 import Search from "../../search";
 import { Link } from "react-router-dom";
 import Settings from "../../settings"
-import { useState } from "react"
 
 export default function Header() {
     return (
@@ -17,12 +16,12 @@ export default function Header() {
                             <Link>Swap</Link>
                         </div>
                         <div className="logo">
-                            <Link to={"/"}><img src="/assets/images/logo.svg"/></Link>
+                            <Link to={"/"}><img src="/assets/images/logo.svg" /></Link>
                         </div>
                         <div className="info">
-                            <Search/>
-                            <Settings/>
-                            <Button text="Connect Wallet"/>
+                            <Search />
+                            <Settings />
+                            <Button text="Connect Wallet" />
                         </div>
                     </div>
                 </div>

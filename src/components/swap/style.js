@@ -22,7 +22,13 @@ const Style = styled.div`
             justify-content: space-between;
     
             .setting {
-                width: 26px
+                width: 24px;
+                opacity: 0.7;
+
+                &:hover {
+                    opacity:1;
+                    cursor: pointer;
+                }
             }
         }
 

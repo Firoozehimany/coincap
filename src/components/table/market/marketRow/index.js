@@ -4,7 +4,7 @@ import Style from "./style"
 export default function MarketRow({ market }) {
 
   function rendeMarketrRow() {
-    return market.map(function(item, index) {
+    return market.map(function (item, index) {
       const { exchangeId, baseSymbol, quoteSymbol, priceUsd, volumeUsd24Hr, volumePercent, tradesCount24Hr } = item
       return (
         <tr key={index}>

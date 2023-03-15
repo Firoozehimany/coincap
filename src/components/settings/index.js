@@ -3,7 +3,7 @@ import { RiSettings3Fill, RiSettings4Fill } from "react-icons/ri";
 import { useState, useEffect } from "react"
 import Style from "./style";
 
-export default function Settings(){
+export default function Settings() {
     const [showSetting, setShowSetting] = useState(false)
 
     useEffect(() => {
@@ -14,10 +14,10 @@ export default function Settings(){
         }
     }, [showSetting]);
 
-    return(
+    return (
         <Style>
             <i className="setting"><RiSettings3Fill size={16} onClick={() => setShowSetting(true)} /></i>
-            {showSetting === true? 
+            {showSetting === true ?
                 <div className="background">
                     <div className="moreInfo">
                         <div className="heade">
@@ -30,8 +30,8 @@ export default function Settings(){
                                     </i>
                                 </div>
                                 <h3>Settings</h3>
-                            </div>  
-                            <i><FaTimes onClick={() => setShowSetting(false)}/></i>
+                            </div>
+                            <i><FaTimes onClick={() => setShowSetting(false)} /></i>
                         </div>
                         <div className="body">
                             <div className="row">
@@ -44,16 +44,16 @@ export default function Settings(){
                             </div>
                             <div className="row">
                                 <h4>USD</h4>
-                                <i><FaSortDown/></i>
+                                <i><FaSortDown /></i>
                             </div>
                             <div className="row">
                                 <h4>English</h4>
-                                <i><FaSortDown/></i>
+                                <i><FaSortDown /></i>
                             </div>
                         </div>
                     </div>
                 </div>
-            : null}
+                : null}
         </Style>
     )
 }

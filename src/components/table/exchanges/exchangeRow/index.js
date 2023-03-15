@@ -2,16 +2,18 @@ import { Link } from "react-router-dom"
 import { abbreviateNum, twoDecimal } from "../../../../ٖUtils/manageNum"
 import Style from "./style"
 
-export default function ExchangeRow({exchange}) {
-  
+export default function ExchangeRow({ exchange }) {
   function renderExchangeRow() {
     return exchange.map(function (item) {
       const { exchangeId, rank, name, tradingPairs, volumeUsd, percentTotalVolume, socket, } = item
+      function handelLink(exchangeId) {
+        window.location.href = `/exchanges/${exchangeId}`;
+      }
       return (
         <tr key={exchangeId}>
           <td>{rank}</td>
           <td className="name">
-            <Link to={`/exchanges/${exchangeId}`}>
+            <Link key={exchangeId} to="#" onClick={() => handelLink(exchangeId)}>
               <p>{name}</p>
             </Link>
           </td>

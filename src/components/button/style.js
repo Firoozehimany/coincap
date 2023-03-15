@@ -23,6 +23,5 @@ const style = styled.div `
         }
     }
 }
-
 `;
 export default style

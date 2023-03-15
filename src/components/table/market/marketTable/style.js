@@ -1,5 +1,5 @@
 import styled from "styled-components"
-const Style = styled.div `
+const Style = styled.div`
     table {
         position: relative;
         margin-top: 60px;
